@@ -3,7 +3,7 @@
 let student = {
     info: {
         firstName: 'Andrey',
-        lastName: 'Зайцев'
+        lastName: 'Zaytsev'
     },
     address: {
         country: 'Russia',
@@ -11,6 +11,6 @@ let student = {
     }
 }
 
-document.write('Имя студента: ', student.info.firstName)
-document.write('Фамилия студента: ', student.info.lastName)
-document.write('Адрес студента: ', student.address.city)
+document.write('<b>Имя студента:</b> ', student.info.firstName, '<br>')
+document.write('<b>Фамилия студента:</b> ', student.info.lastName, '<br>')
+document.write('<b>Адрес студента:</b> ', student.address.city, '<br>')
