@@ -10,6 +10,8 @@ let student = {
         city: 'Moscow'
     }
 }
+student.info.firstName = 'Olga'
+student.info.firstName = 'Andrey'
 
 document.write('<b>Имя студента:</b> ', student.info.firstName, '<br>')
 document.write('<b>Фамилия студента:</b> ', student.info.lastName, '<br>')
