@@ -1,7 +1,7 @@
 //Objects
 //data
 let student = {
-    info: {
+    personalData: {
         firstName: 'Andrey',
         lastName: 'Zaytsev'
     },
@@ -10,12 +10,13 @@ let student = {
         city: 'Moscow'
     }
 }
-student.info.firstName = 'Olga'
-student.info.firstName = 'Andrey'
+student.personalData.firstName = 'Olga'
+student.personalData.firstName = 'Andrey'
 
 //render
-document.write('<b>Имя студента:</b> ', student.info.firstName, '<br>')
-document.write('<b>Фамилия студента:</b> ', student.info.lastName, '<br>')
+document.write('<h1>Personal DATA:</h1>')
+document.write('<b>Имя студента:</b> ', student.personalData.firstName, '<br>')
+document.write('<b>Фамилия студента:</b> ', student.personalData.lastName, '<br>')
 document.write('<b>Адрес студента:</b> ', student.address.city, '<br>')
 
-console.log(student.info.firstName)
+console.log(student.personalData.firstName)
