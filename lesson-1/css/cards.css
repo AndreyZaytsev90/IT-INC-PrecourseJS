@@ -1,0 +1,35 @@
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+    font-family: 'Lato', sans-serif;
+}
+
+.container {
+    margin: 30px;
+    padding: 30px;
+}
+
+.card1Body {
+    width: 255px;
+    height: 160px;
+    border: 1px solid #c7c2c2; /* исправлено: добавлено значение для border */
+    background-color: #eeb839;
+    border-radius: 5px;
+    padding: 10px; /* добавлено: добавляет отступ внутри элемента */
+}
+
+.containerCard {
+
+}
+
+.card1Type {
+    color: black;
+}
+
+.currentBalance {
+    display: block; /* Поместить "Current Balance" на новую строку */
+    font-size: x-small;
+    margin-top: 25px;
+}
+
