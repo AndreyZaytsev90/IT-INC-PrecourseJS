@@ -18,18 +18,39 @@
     border-radius: 5px;
     padding: 10px; /* добавлено: добавляет отступ внутри элемента */
 }
+.image {
+    width: 35px;
+    height: 25px;
+    margin-left: 117px;
+}
 
-.containerCard {
+.cardInfo {
+    display: flex;
+    justify-content: space-between;
+    margin-top: 25px;
+}
 
+.cardNumber1 {
+    font-size: x-small;
 }
 
 .card1Type {
     color: black;
 }
 
+.cardExpirationMonth1 {
+    font-size: x-small;
+    margin-left: 105px;
+}
+.cardExpirationYear1 {
+    font-size: x-small;
+}
+
 .currentBalance {
     display: block; /* Поместить "Current Balance" на новую строку */
     font-size: x-small;
-    margin-top: 25px;
+    margin-top: 30px;
+    margin-bottom: 10px;
 }
+
 

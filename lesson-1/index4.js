@@ -1,6 +1,9 @@
 const currentName = document.querySelector(".currentName"); // ищем span по класс .currentName
 const card1Type = document.querySelector(".card1Type")
-const currentBalanceValue1 = document.querySelector(".card1Type")
+const currentBalanceValue1 = document.querySelector(".currentBalanceValue1")
+const cardNumber1 = document.querySelector(".cardNumber1")
+const cardExpirationMonth1 = document.querySelector(".cardExpirationMonth1")
+const cardExpirationYear1 = document.querySelector(".cardExpirationYear1")
 
 let currentUser = {
 name: 'Andrey'
@@ -31,3 +34,6 @@ let card2 = {
 currentName.textContent = currentUser.name
 card1Type.textContent = card1.type
 currentBalanceValue1.textContent = card1.currentBalance
+cardNumber1.textContent = card1.number
+cardExpirationMonth1.textContent = card1.expirationMonth + "/"
+cardExpirationYear1.textContent = card1.expirationYear
