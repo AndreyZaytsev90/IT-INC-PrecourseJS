@@ -1,4 +1,4 @@
-alert("Hello")
+/*alert("Hello")*/
 
 // Создание элемента заголовка (h1) и добавление текста к этому элементу
 const titleElement = document.createElement('h1');
@@ -24,3 +24,52 @@ techSelectElement.append(techSelectOption1Element); // Добавление вт
 
 // Добавление второго варианта в тело документа (вместо этого, вероятно, предполагалось добавить сам выпадающий список)
 document.body.append(techSelectElement);
+
+/*---------------------------------------------------------------------------*/
+// data
+/*const title = 'it-incubator';
+const graduatesCount = 203434300;
+const areYouChampion = false;
+// render
+let pageTitleElement = document.createElement('h1');
+pageTitleElement.innerText = title;
+document.body.append(pageTitleElement);
+
+let graduatesCountElement = document.createElement('input');
+graduatesCountElement.value = graduatesCount;
+document.body.append(graduatesCountElement);
+
+let areYouChampionElement = document.createElement('input');
+areYouChampionElement.type = 'checkbox';
+areYouChampionElement.checked = areYouChampion;
+document.body.append(areYouChampionElement);*/
+
+/*-------------------------------------------------------------------------------*/
+
+
+// data
+const info = {
+    title: 'it-incubator',
+    graduatesCount: 2000,
+    areYouChampion: true,
+    technologies: ['Front', 'Back', 'DevOps']
+}
+
+
+// render
+let pageTitleElement = document.createElement('h1');
+pageTitleElement.innerText = info.title;
+document.body.append(pageTitleElement);
+
+let graduatesCountElement = document.createElement('input');
+graduatesCountElement.value = info.graduatesCount;
+document.body.append(graduatesCountElement);
+
+let areYouChampionElement = document.createElement('input');
+areYouChampionElement.type = 'checkbox';
+areYouChampionElement.checked = info.areYouChampion;
+document.body.append(areYouChampionElement);
+
+/*let technologies = */
+
+/*--------------------------------------------------------------------------------*/
