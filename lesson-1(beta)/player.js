@@ -8,17 +8,17 @@ let playlist = {
     },
     tracks: [
         {
-            coverImageUrl: "./track1.jpg",
+            coverImageUrl: "track1.jpg",
             artist: "Eminem",
             title: "Rap God",
-            fileUrl: "./Eminem_-_Rap_God_.mp3",
+            fileUrl: "Eminem_-_Rap_God_.mp3",
             isHot: false
         },
         {
-            coverImageUrl: "./track2.jpg",
+            coverImageUrl: "track2.jpg",
             artist: "50 cent",
             title: "In da Club",
-            fileUrl: "./50_Cent_-_In_Da_Club.mp3",
+            fileUrl: "50_Cent_-_In_Da_Club.mp3",
             isHot: true
         },
     ]
@@ -72,14 +72,22 @@ function renderTrack(inputTrackForRendering){
     // здесь логика отрисовки "входного" трека
     let tracksListElement = document.createElement('ul')
 
+
+
     for (let i = 0; i < inputTrackForRendering.tracks.length; i++) {
         let trackElement = document.createElement('li')
         trackElement.title = inputTrackForRendering.tracks[i].title
         trackElement.artist = inputTrackForRendering.tracks[i].artist
         trackElement.append(trackElement.artist + " - " + trackElement.title)
+
+        let playerElement = document.createElement('audio')
+        playerElement.src = playlist.tracks[i].fileUrl
+        playerElement.controls = true
+
+        trackElement.append(playerElement)
         tracksListElement.append(trackElement)
-        document.body.append(tracksListElement)
     }
+    document.body.append(tracksListElement)
 }
 
 
