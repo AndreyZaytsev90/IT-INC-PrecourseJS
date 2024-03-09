@@ -102,6 +102,7 @@ function renderPlaylistTracks(playlistForRendering) {
         const trackInfo = document.createElement("div")
 
         let coverTrackImageUrl = document.createElement('img')
+        coverTrackImageUrl.style.height = '76.5px'
         coverTrackImageUrl.style.padding = '0 5px 0 0'
         coverTrackImageUrl.src = playlistForRendering.tracks[i].coverImageUrl
 
