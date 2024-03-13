@@ -1,6 +1,6 @@
-export function renderPlaylistTracks(tracks) {
+export function renderPlaylistTracks(playlistForRendering) {
 
-    for (let i = 0; i < tracks.length; i++) {
+    for (let i = 0; i < playlistForRendering.tracks.length; i++) {
 
         const trackElement = document.createElement("div")
         trackElement.style.display = 'flex'
@@ -11,19 +11,19 @@ export function renderPlaylistTracks(tracks) {
         let coverTrackImageUrl = document.createElement('img')
         coverTrackImageUrl.style.height = '76.5px'
         coverTrackImageUrl.style.padding = '0 5px 0 0'
-        coverTrackImageUrl.src = tracks[i].coverImageUrl
+        coverTrackImageUrl.src = playlistForRendering.tracks[i].coverImageUrl
 
         let trackTitleElement = document.createElement("div")
 
-        if (tracks[i].isHot) {
+        if (playlistForRendering.tracks[i].isHot) {
             let coverHotImageUrl = document.createElement('img')
-            coverHotImageUrl.src = tracks[i].coverHotUrl
+            coverHotImageUrl.src = playlistForRendering.coverHotUrl
             trackTitleElement.append(coverHotImageUrl)
         }
-        trackTitleElement.append(tracks[i].artistName + " - " + tracks[i].title)
+        trackTitleElement.append(playlistForRendering.tracks[i].artistName + " - " + playlistForRendering.tracks[i].title)
 
         let playerElement = document.createElement('audio')
-        playerElement.src = tracks[i].fileUrl
+        playerElement.src = playlistForRendering.tracks[i].fileUrl
         playerElement.controls = true
 
 
