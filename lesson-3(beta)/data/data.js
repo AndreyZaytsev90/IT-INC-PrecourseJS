@@ -7,10 +7,17 @@ export const data = {
     button: '+'
 }
 
+let callback = function () {}
+
 // каждую секунду будем увеличивать data.count 
 setInterval(function() {
     data.clientsCount++;
     // и затем перерисовывать весь счётчик 
-    renderCounter(data);
+    callback();
 }, 1000);
+
+
+export function setCallback(newCallback){
+    callback = newCallback
+}
                                               
