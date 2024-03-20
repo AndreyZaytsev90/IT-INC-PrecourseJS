@@ -1,7 +1,8 @@
 import {Header} from "./header/Header.js";
 import {Count} from "./count/Count.js";
-import {Button} from "./button/Button.js";
+import {IncButton} from "./buttons/incButton.js";
 import {data} from "../../data/data.js";
+import {DecButton} from "./buttons/decButton.js";
 
 export function renderCounter() {
 
@@ -21,7 +22,8 @@ export function renderCounter() {
     
     data.borderCounter.append(Header())
     data.borderCounter.append(Count())
-    data.borderCounter.append(Button())
+    data.borderCounter.append(IncButton())
+    data.borderCounter.append(DecButton())
     
     document.body.append(data.borderCounter)
 }

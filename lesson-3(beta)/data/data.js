@@ -4,20 +4,30 @@ export const data = {
     headerTitle: 'Counter',
     clientsCount: 0,
     borderCounter: '',
-    button: '+'
+    incButton: '+',
+    decButton: '-'
 }
 
-let callback = function () {}
+let callback = function() {}
 
 // каждую секунду будем увеличивать data.count 
 setInterval(function() {
     data.clientsCount++;
     // и затем перерисовывать весь счётчик 
     callback();
-}, 1000);
+}, 3000);
 
 
 export function setCallback(newCallback){
     callback = newCallback
 }
-                                              
+
+export function incrementCount() {
+    data.clientsCount++
+    callback()
+}
+                                                
+export function decrementCount(){
+    data.clientsCount--
+    callback()
+}
