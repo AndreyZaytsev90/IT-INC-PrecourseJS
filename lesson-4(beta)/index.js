@@ -1,8 +1,8 @@
 import {data} from './data/data.js'
-import {Todolist} from './components/todolist.js'
+import {Todolist} from './components/todolist.component.js'
 
-const todolist = new Todolist(data.todolist)
+const todolistElement = Todolist(data.todolist)
 
-const root = document.getElementById('root')
+const rootElement = document.getElementById('root')
 
-root.append(todolist)
+rootElement.append(todolistElement)
