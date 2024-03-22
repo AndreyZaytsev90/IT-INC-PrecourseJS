@@ -9,13 +9,22 @@
 </head>
 <body>
 <script>
-  /*  function points(games) {
-        const stringNumber1 = "1:0";
-        const partsNumber1 = stringNumber1.split(":");
-        const number1 = parseInt(partsNumber1[0]);
-        return number1
+
+    function rentalCarCost(d) {
+        let total = 0
+        if(d < 3){
+            total = d * 40
+        }
+        if(d >= 3 && d <= 7){
+            total = (d * 40) - 20
+        }
+        if(d > 7){
+            total = (d * 40) - 50
+        }
+        return total
     }
-    points(d)*/
+
+    console.log(rentalCarCost(7))
 
 </script>
 </body>
