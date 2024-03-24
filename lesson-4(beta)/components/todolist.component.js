@@ -18,9 +18,25 @@ function Headers(title) {
 
 function TasksList(tasks) {
     const container = document.createElement('ol')
+
     for (let i = 0; i < tasks.length; i++) {
-        const taskElement = document.createElement('li')
-        container.append(taskElement[i])
+        const task = tasks[i]
+        const taskElement = Task(task)
+        container.append(taskElement)
     }
+    return container
+}
+
+function Task(task) {
+    const container = document.createElement('li')
+    container.append(task.title)
+    return container
+}
+
+function ButtonsPanel() {
+    const container = document.createElement('div')
+    const addButtonElement = document.createElement('button')
+    addButtonElement.innerHTML = "+add"
+    container.append(addButtonElement)
     return container
 }
