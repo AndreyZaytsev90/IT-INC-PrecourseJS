@@ -1,16 +1,21 @@
 export const data = {
     todolist: {
-        id: Number(new Date),
+        id: createUniqId(),
         title: "Want to Learn",
         tasks: [
             {
-                id: Number(new Date),
+                id: createUniqId(),
                 title: "Learn HTML",
             },
             {
-                id: Number(new Date),
+                id: createUniqId(),
                 title: "Learn CSS",
             },
         ]
     }
+}
+
+
+function createUniqId(){
+    return Math.floor(Math.random()*10000000)
 }
