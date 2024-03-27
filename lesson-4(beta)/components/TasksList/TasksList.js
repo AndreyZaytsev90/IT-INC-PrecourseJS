@@ -1,4 +1,4 @@
-import {Task} from "../../Task.js";
+import {Task} from "./Task/Task.js";
 
 export function TasksList(tasks) {
     const container = document.createElement('ol')

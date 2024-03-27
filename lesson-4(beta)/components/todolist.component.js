@@ -1,5 +1,5 @@
 import {Header} from "./Header/Header.js";
-import {TasksList} from "./TasksList/Task/TasksList.js";
+import {TasksList} from "./TasksList/TasksList.js";
 import {ButtonsPanel} from "./ButtonsPanel/ButtonsPanel.js";
 
 export function Todolist(data) {
