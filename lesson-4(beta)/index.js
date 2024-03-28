@@ -1,9 +1,13 @@
-import {data} from './data/data.js'
+import {data, subscribe} from './data/data.js'
 import {Todolist} from './components/todolist.component.js'
 
-console.log(data)
-const todolistElement = Todolist(data.todolist)
+subscribe(refreshUI) //передаем саму функцию
 
-const rootElement = document.getElementById('root')
+function refreshUI() {
+    const todolistElement = Todolist(data.todolist)
+    const rootElement = document.getElementById('root')
+    rootElement.innerHTML = '' //зачистка старых данных
+    rootElement.append(todolistElement)
+}
 
-rootElement.append(todolistElement)
+refreshUI() //вызываем функцию

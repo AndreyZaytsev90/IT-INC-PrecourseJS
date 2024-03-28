@@ -15,6 +15,12 @@ export const data = {
     }
 }
 
+let notifySubscriber = () => {} //в этом модуле у нас остается notifySubscriber и у нас есть возможность вызвать ее
+export function subscribe(callback) {  //сюда функция refreshUI попадает под именем callback
+    notifySubscriber = callback // далее эту функцию мы присваиваем notifySubscriber
+}
+
+
 function generateId() {
     const chars = 'ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789';
     const charsLength = chars.length;
@@ -34,10 +40,17 @@ function generateId() {
     return id;
 }
 
-function addTask(data) {
-   const newTask = {
-       id: generateId(),
-       title: "--------",
-   }
-   data.todolist.tasks.push(newTask)
+export function addTask() {
+    const newTask = {
+        id: generateId(),
+        title: "--------",
+    }
+    console.log(data)
+    data.todolist.tasks.push(newTask)
+
+    notifySubscriber() // вызывая notifySubscriber здесь, мы вызываем функцию refreshUI в index.js
+}
+
+export function removeTask(id){
+    data.todolist.tasks.filter(el=>el.id === id)
 }
