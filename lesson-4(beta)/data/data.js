@@ -11,8 +11,21 @@ export const data = {
                 id: generateId(),
                 title: "Learn CSS",
             },
-        ]
+        ],
+        isAddTaskDialogOpen: false
     }
+}
+
+export function openAddTaskDialog() {
+    data.todolist.isAddTaskDialogOpen = true;
+    notifySubscriber()
+    // здесь может быть логика открытия диалогового окна
+}
+
+export function closeAddTaskDialog() {
+    data.todolist.isAddTaskDialogOpen = false;
+    notifySubscriber()
+    // здесь может быть логика закрытия диалогового окна
 }
 
 let notifySubscriber = () => {} //в этом модуле у нас остается notifySubscriber и у нас есть возможность вызвать ее
@@ -40,10 +53,10 @@ function generateId() {
     return id;
 }
 
-export function addTask() {
+export function addTask(newTitle) {
     const newTask = {
         id: generateId(),
-        title: "--------",
+        title: newTitle,
     }
     console.log(data)
     data.todolist.tasks.push(newTask)
