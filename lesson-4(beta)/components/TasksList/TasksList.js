@@ -8,5 +8,6 @@ export function TasksList(tasks) {
         const taskElement = Task(task)
         container.append(taskElement)
     }
+    
     return container
 }

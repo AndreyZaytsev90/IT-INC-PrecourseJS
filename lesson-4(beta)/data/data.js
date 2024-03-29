@@ -52,5 +52,6 @@ export function addTask() {
 }
 
 export function removeTask(id){
-    data.todolist.tasks.filter(el=>el.id === id)
+    data.todolist.tasks = data.todolist.tasks.filter(el=>el.id !== id)
+    notifySubscriber()
 }

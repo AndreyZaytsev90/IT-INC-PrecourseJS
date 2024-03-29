@@ -9,3 +9,4 @@ export function ButtonsPanel() {
     container.append(addButtonElement)
     return container
 }
+
