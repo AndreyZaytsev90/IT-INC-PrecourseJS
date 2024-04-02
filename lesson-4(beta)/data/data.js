@@ -19,16 +19,15 @@ export const data = {
 export function openAddTaskDialog() {
     data.todolist.isAddTaskDialogOpen = true;
     notifySubscriber()
-    // здесь может быть логика открытия диалогового окна
 }
 
 export function closeAddTaskDialog() {
     data.todolist.isAddTaskDialogOpen = false;
     notifySubscriber()
-    // здесь может быть логика закрытия диалогового окна
 }
 
-let notifySubscriber = () => {} //в этом модуле у нас остается notifySubscriber и у нас есть возможность вызвать ее
+let notifySubscriber = () => {
+} //в этом модуле у нас остается notifySubscriber и у нас есть возможность вызвать ее
 export function subscribe(callback) {  //сюда функция refreshUI попадает под именем callback
     notifySubscriber = callback // далее эту функцию мы присваиваем notifySubscriber
 }
@@ -64,7 +63,7 @@ export function addTask(newTitle) {
     notifySubscriber() // вызывая notifySubscriber здесь, мы вызываем функцию refreshUI в index.js
 }
 
-export function removeTask(id){
-    data.todolist.tasks = data.todolist.tasks.filter(el=>el.id !== id)
+export function removeTask(id) {
+    data.todolist.tasks = data.todolist.tasks.filter(el => el.id !== id)
     notifySubscriber()
 }
