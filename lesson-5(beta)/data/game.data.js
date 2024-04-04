@@ -1,3 +1,8 @@
+export const OFFER_STATUSES = {
+    default: 'default',
+    missed: 'missed',
+    caught: 'caught'
+}
 export const data = {
     settings: {
         rowsCount: 6,
@@ -7,24 +12,23 @@ export const data = {
         decreaseDeltaInMs: 100,
         inMuted: true
     },
+    status: OFFER_STATUSES.missed,
     coords: {
         current: {
             x: 0,
             y: 1
         },
-        caught: {
+        previous: {
             x: 1,
             y: 5,
-        },
-        missed: {
-            x: 2,
-            y: 1
-        },
+        }
     },
     score: {
         missCount: 2,
         catchCount: 1
     }
-
-
 }
+
+setInterval(()=> {
+
+},2000)
