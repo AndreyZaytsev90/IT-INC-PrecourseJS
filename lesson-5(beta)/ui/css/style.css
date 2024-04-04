@@ -1,0 +1,16 @@
+body {
+    background-color: #4FABFF;
+    background-image: url('../../assets/background-image.png');
+    background-repeat: no-repeat;
+    background-attachment: fixed;
+    background-size: cover;
+}
+
+table td {
+    box-sizing: border-box;
+    border: 2px solid rgb(84, 186, 224);
+    border-radius: 5px;
+    background: rgb(69, 128, 196);
+    width: 84px;
+    height: 84px;
+}
