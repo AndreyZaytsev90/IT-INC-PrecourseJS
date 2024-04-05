@@ -5,13 +5,10 @@ export function Game() {
     const containerElement = document.createElement('div')
     
     const settingsElement = Settings()
-    containerElement.append(settingsElement)
-
     const scoresElement = Scores()
-    containerElement.append(scoresElement)
-
     const gridElement = Grid()
-    containerElement.append(gridElement)
+    
+    containerElement.append(settingsElement, scoresElement, gridElement)
     
     return containerElement
 }
