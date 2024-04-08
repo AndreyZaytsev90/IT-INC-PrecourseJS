@@ -1,3 +1,9 @@
+export const GAME_STATUSES = {
+    SETTINGS: 'settings',
+    IN_PROGRESS: 'in_progress',
+    FINISH: 'finish'
+}
+
 export const OFFER_STATUSES = {
     default: 'default',
     missed: 'missed',
@@ -7,7 +13,7 @@ export const data = {
     settings: {
         rowsCount: 5,
         columnCount: 5,
-        pointsToWin: 10,
+        pointsToWin: 3,
         maximumMisses: 3,
         decreaseDeltaInMs: 100,
         inMuted: true
@@ -24,9 +30,10 @@ export const data = {
         }
     },
     score: {
-        missCount: 2,
-        catchCount: 1
-    }
+        missCount: 0,
+        catchCount: 0
+    },
+    gameStatus: GAME_STATUSES.IN_PROGRESS
 }
 let subscriber = () => {
 }
@@ -51,34 +58,36 @@ function jumpOfferToRandomPosition(){
 }
 
 export function catchOffer(){
-    data.score.catchCount++
-    jumpOfferToRandomPosition()
-    
     clearInterval(jumpIntervalId)
-    runJumpInterval()
-    
+    data.score.catchCount++
+    if(data.score.catchCount === data.settings.pointsToWin){
+        data.gameStatus = GAME_STATUSES.FINISH
+    } else {
+        jumpOfferToRandomPosition()
+        runJumpInterval()
+        data.status = OFFER_STATUSES.caught
+    }
+    subscriber()
+}
+
+function missOffer(){
+    clearInterval(jumpIntervalId)
+    data.score.missCount++;
+    if (data.score.missCount === data.settings.maximumMisses){
+        data.gameStatus = GAME_STATUSES.FINISH
+    } else {
+        jumpOfferToRandomPosition()
+        runJumpInterval()
+        data.status = OFFER_STATUSES.missed
+    }
     subscriber()
 }
 
 let jumpIntervalId
-let prevCatchCount = data.score.catchCount; //потребуется сохранить предыдущее значение
+
 export function runJumpInterval(){
-    
-    jumpIntervalId = setInterval(() => {
-        if(data.score.catchCount === prevCatchCount){
-            data.score.missCount++;
-        }
-        jumpOfferToRandomPosition()
-        subscriber()
-    }, 2000)
+    jumpIntervalId = setInterval(missOffer, 2000)
 }
-
-
-
-//после некоторых вычислений
-
-
-
 
 runJumpInterval()
 
