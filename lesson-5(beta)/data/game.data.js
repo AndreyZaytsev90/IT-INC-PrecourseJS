@@ -33,7 +33,7 @@ export const data = {
         missCount: 0,
         catchCount: 0
     },
-    gameStatus: GAME_STATUSES.IN_PROGRESS
+    gameStatus: GAME_STATUSES.SETTINGS
 }
 let subscriber = () => {
 }
