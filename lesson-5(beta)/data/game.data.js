@@ -1,7 +1,8 @@
 export const GAME_STATUSES = {
     SETTINGS: 'settings',
     IN_PROGRESS: 'in_progress',
-    FINISH: 'finish'
+    WIN: 'win',
+    LOSE: 'lose'
 }
 
 export const OFFER_STATUSES = {
@@ -11,8 +12,8 @@ export const OFFER_STATUSES = {
 }
 export const data = {
     settings: {
-        rowsCount: 5,
-        columnCount: 5,
+        rowsCount: 3, //y
+        columnCount: 3, //x
         pointsToWin: 3,
         maximumMisses: 3,
         decreaseDeltaInMs: 100,
@@ -34,6 +35,7 @@ export const data = {
         catchCount: 0
     },
     gameStatus: GAME_STATUSES.SETTINGS
+
 }
 let subscriber = () => {
 }
@@ -61,7 +63,7 @@ export function catchOffer(){
     clearInterval(jumpIntervalId)
     data.score.catchCount++
     if(data.score.catchCount === data.settings.pointsToWin){
-        data.gameStatus = GAME_STATUSES.FINISH
+        data.gameStatus = GAME_STATUSES.WIN
     } else {
         jumpOfferToRandomPosition()
         runJumpInterval()
@@ -74,7 +76,7 @@ function missOffer(){
     clearInterval(jumpIntervalId)
     data.score.missCount++;
     if (data.score.missCount === data.settings.maximumMisses){
-        data.gameStatus = GAME_STATUSES.FINISH
+        data.gameStatus = GAME_STATUSES.LOSE
     } else {
         jumpOfferToRandomPosition()
         runJumpInterval()
@@ -89,5 +91,13 @@ export function runJumpInterval(){
     jumpIntervalId = setInterval(missOffer, 2000)
 }
 
-runJumpInterval()
+if(data.gameStatus !== GAME_STATUSES.SETTINGS){
+    runJumpInterval()
+}
+
+export function startGame(){
+    data.gameStatus = GAME_STATUSES.IN_PROGRESS
+    runJumpInterval()
+}
+
 

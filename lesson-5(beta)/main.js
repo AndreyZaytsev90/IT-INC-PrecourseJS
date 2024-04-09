@@ -1,7 +1,8 @@
 import {Game} from "./ui/game/game.component.js"
 import {data, GAME_STATUSES, subscribe} from "./data/game.data.js";
-import {Finish} from "./ui/finish/finish.component.js";
 import {Settings} from "./ui/game/settings/settings.component.js";
+import {Win} from "./ui/finish/win.component.js";
+import {Lose} from "./ui/finish/lose.component.js";
 
 
 subscribe(renderApp)
@@ -15,14 +16,20 @@ function renderApp() {
             const settingEl = Settings()
             appEl.append(settingEl)
             break
+        
         case GAME_STATUSES.IN_PROGRESS:
             const gameEl = Game()
             appEl.append(gameEl)
             break
         
-        case GAME_STATUSES.FINISH:
-            const finishEl = Finish()
-            appEl.append(finishEl)
+        case GAME_STATUSES.WIN:
+            const winEl = Win()
+            appEl.append(winEl)
+            break
+
+        case GAME_STATUSES.LOSE:
+            const loseEl = Lose()
+            appEl.append(loseEl)
             break
     }
 }
