@@ -14,7 +14,7 @@ export const data = {
     settings: {
         rowsCount: 3, //y
         columnCount: 3, //x
-        pointsToWin: 3,
+        pointsToWin: 20,
         maximumMisses: 3,
         decreaseDeltaInMs: 100,
         inMuted: true
@@ -91,13 +91,14 @@ export function runJumpInterval(){
     jumpIntervalId = setInterval(missOffer, 2000)
 }
 
-if(data.gameStatus !== GAME_STATUSES.SETTINGS){
-    runJumpInterval()
-}
 
 export function startGame(){
     data.gameStatus = GAME_STATUSES.IN_PROGRESS
     runJumpInterval()
+}
+
+export function playAgain(){
+    data.gameStatus = GAME_STATUSES.SETTINGS
 }
 
 

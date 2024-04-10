@@ -22,10 +22,12 @@ export function GridSize(){
         data.settings.rowsCount = parseInt(rowsCount);
         data.settings.columnCount = parseInt(columnCount);
     });
+
+    console.log('x', data.settings.rowsCount)
+    console.log('y', data.settings.columnCount)
     
     containerElement.append(settingName, settingElement)
     return containerElement
-    /*console.log('x', data.settings.rowsCount)
-    console.log('y', data.settings.columnCount)*/
+    
 
 }

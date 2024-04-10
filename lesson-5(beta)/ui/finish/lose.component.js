@@ -5,5 +5,6 @@ export function Lose() {
     if(data.score.missCount === data.settings.maximumMisses) {
         containerElement.append('LOSE')
     }
+    
     return containerElement
 }

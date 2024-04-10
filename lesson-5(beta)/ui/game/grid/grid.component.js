@@ -3,7 +3,7 @@ import {Cell} from "./cell/cell.component.js"
 
 export function Grid() {
     const containerElement = document.createElement('table')
-    /*const gridElement = 'grid will be here'*/
+    containerElement.className = 'grid-container'; // добавить класс
 
     for (let y = 0; y < data.settings.rowsCount; y++) {
         const row = document.createElement('tr')
