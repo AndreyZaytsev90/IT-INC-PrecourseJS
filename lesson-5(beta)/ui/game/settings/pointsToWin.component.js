@@ -23,7 +23,7 @@ export function PointsToWin() {
         data.settings.pointsToWin = parseInt(this.value);
     });
 
-    console.log('pointsToWin -->',data.settings.pointsToWin)
+    /*console.log('pointsToWin -->',data.settings.pointsToWin)*/
     
     containerElement.append(settingName, settingElement)
     return containerElement

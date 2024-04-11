@@ -14,7 +14,7 @@ export const data = {
     settings: {
         rowsCount: 3, //y
         columnCount: 3, //x
-        pointsToWin: 20,
+        pointsToWin: 3,
         maximumMisses: 3,
         decreaseDeltaInMs: 100,
         inMuted: true
@@ -94,11 +94,16 @@ export function runJumpInterval(){
 
 export function startGame(){
     data.gameStatus = GAME_STATUSES.IN_PROGRESS
+    
     runJumpInterval()
+    subscriber()
 }
 
 export function playAgain(){
     data.gameStatus = GAME_STATUSES.SETTINGS
+    data.score.catchCount = 0
+    data.score.missCount = 0
+    subscriber()
 }
 
 

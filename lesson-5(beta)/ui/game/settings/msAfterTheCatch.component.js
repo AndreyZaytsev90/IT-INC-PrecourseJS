@@ -21,7 +21,7 @@ export function MsAfterTheCatch() {
         data.settings.decreaseDeltaInMs = parseInt(this.value);
     });
 
-    console.log('decreaseDeltaInMs -->',data.settings.decreaseDeltaInMs)
+    /*console.log('decreaseDeltaInMs -->',data.settings.decreaseDeltaInMs)*/
     
     containerElement.append(settingName, settingElement)
     return containerElement

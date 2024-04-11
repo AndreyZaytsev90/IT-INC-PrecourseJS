@@ -22,7 +22,7 @@ export function MaximumMisses() {
         data.settings.maximumMisses = parseInt(this.value);
     });
     
-    console.log('maximumMisses -->',data.settings.maximumMisses)
+    /*console.log('maximumMisses -->',data.settings.maximumMisses)*/
     
     containerElement.append(settingName, settingElement)
     return containerElement

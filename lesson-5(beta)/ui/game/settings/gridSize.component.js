@@ -23,8 +23,8 @@ export function GridSize(){
         data.settings.columnCount = parseInt(columnCount);
     });
 
-    console.log('x', data.settings.rowsCount)
-    console.log('y', data.settings.columnCount)
+    /*console.log('x', data.settings.rowsCount)
+    console.log('y', data.settings.columnCount)*/
     
     containerElement.append(settingName, settingElement)
     return containerElement

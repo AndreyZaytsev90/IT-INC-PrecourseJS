@@ -53,5 +53,155 @@ select {
     box-sizing: border-box;
     border: 2px solid rgb(84, 140, 224);
     border-radius: 30px;
+}
 
+
+.img-background {
+    position: absolute;
+    width: 280px;
+    height: 407px;
+    left: 50%;
+    transform: translateX(-50%);
+    top: 229px;
+    bottom: -138px;
+    margin: 0;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.youWin {
+    position: absolute;
+    width: 280px;
+    height: 407px;
+    left: 52.7%;
+    transform: translateX(-50%);
+    top: 300px;
+    color: rgb(54, 118, 188);
+    font-size: 48px;
+    font-weight: 600;
+    line-height: 60px;
+    z-index: 2;
+}
+.youLose {
+    position: absolute;
+    width: 280px;
+    height: 407px;
+    left: 51.9%;
+    transform: translateX(-50%);
+    top: 300px;
+    color: rgb(54, 118, 188);
+    font-size: 48px;
+    font-weight: 600;
+    line-height: 60px;
+    z-index: 2;
+}
+
+.congratulations{
+    position: absolute;
+    width: 280px;
+    height: 407px;
+    left: 46.6%;
+    top: 355px;
+    color: rgb(54, 118, 188);
+    font-size: 18px;
+    font-weight: 400;
+    line-height: 24px;
+    z-index: 2;
+}
+.loseMessage{
+    position: absolute;
+    width: 280px;
+    height: 407px;
+    left: 44.8%;
+    top: 355px;
+    color: rgb(54, 118, 188);
+    font-size: 18px;
+    font-weight: 400;
+    line-height: 24px;
+    z-index: 2;
+}
+
+.currentCatchCount {
+    position: absolute;
+    display: flex;
+    justify-content: space-between;
+    width: 200px;
+    height: 407px;
+    left: 44.5%;
+    top: 400px;
+    color: rgb(54, 118, 188);
+    font-size: 18px;
+    font-weight: 400;
+    line-height: 24px;
+}
+
+.catchTitle,
+.catchValue,
+.missTitle,
+.missValue {
+    white-space: nowrap;
+}
+.catchValue,
+.missValue{
+    font-weight: 700;
+}
+
+.currentMissCount {
+    position: absolute;
+    display: flex;
+    justify-content: space-between;
+    width: 200px;
+    height: 407px;
+    left: 44.5%;
+    top: 450px;
+    color: rgb(54, 118, 188);
+    font-size: 18px;
+    font-weight: 400;
+    line-height: 24px;
+}
+
+.ellipseImg {
+    position: absolute;
+    width: 135px;
+    height: 135px;
+    left: 50%;
+    transform: translateX(-50%);
+    top: 150px;
+    bottom: -138px;
+    margin: 0;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.imgWin {
+    position: absolute;
+    left: 49.65%;
+    transform: translateX(-50%);
+    top: 173px;
+    width: 90px;
+    height: 90px;
+    z-index: 3
+;
+}
+
+.imgLose{
+    position: absolute;
+    left: 49.65%;
+    transform: translateX(-50%);
+    top: 177px;
+    width: 80px;
+    height: 80px;
+    z-index: 3
+}
+
+.imgVector{
+    position: absolute;
+    left: 49.65%;
+    transform: translateX(-50%);
+    top: 194px;
+    width: 45px;
+    height: 45px;
+    z-index: 3
 }
