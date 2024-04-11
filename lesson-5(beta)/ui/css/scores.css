@@ -24,3 +24,29 @@
 .scores-miss-container {
     margin-left: 80px;
 }
+
+.currentCatchCountScores {
+    position: absolute;
+    display: flex;
+    justify-content: space-between;
+    width: 120px;
+    height: 407px;
+    left: 10%;
+    top: 25px;
+    font-size: 24px;
+    font-weight: 400;
+    line-height: 24px;
+}
+
+.currentMissCountScores {
+    position: absolute;
+    display: flex;
+    justify-content: space-between;
+    width: 120px;
+    height: 407px;
+    left: 63%;
+    top: 25px;
+    font-size: 24px;
+    font-weight: 400;
+    line-height: 24px;
+}

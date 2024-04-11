@@ -8,7 +8,7 @@ export function Cell(x, y) {
         offerImage.addEventListener('click', () => catchOffer())
         cellEl.append(offerImage)
     }
-  /*  if (data.status === OFFER_STATUSES.caught && x === data.coords.previous.x && y === data.coords.previous.y) {
+    if (data.status === OFFER_STATUSES.caught && x === data.coords.previous.x && y === data.coords.previous.y) {
         let offerImage = document.createElement('img')
         offerImage.src = './assets/caught-offer.png'
         cellEl.append(offerImage)
@@ -17,6 +17,6 @@ export function Cell(x, y) {
         let offerImage = document.createElement('img')
         offerImage.src = './assets/missed-offer.png'
         cellEl.append(offerImage)
-    }*/
+    }
     return cellEl
 }

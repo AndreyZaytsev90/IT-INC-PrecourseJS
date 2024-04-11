@@ -19,15 +19,15 @@ export const data = {
         decreaseDeltaInMs: 100,
         inMuted: true
     },
-    status: OFFER_STATUSES.caught,
+    status: OFFER_STATUSES.default,
     coords: {
         current: {
             x: 0,
-            y: 1
+            y: 0
         },
         previous: {
-            x: 1,
-            y: 5,
+            x: 0,
+            y: 0,
         }
     },
     score: {

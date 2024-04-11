@@ -35,8 +35,7 @@ export function Result() {
     currentMissCount.append(missTitle, missValue)
 
     containerElement.append(
-        img,
-        ellipseImg,
+        img,ellipseImg,
         currentCatchCount,
         currentMissCount);
 
