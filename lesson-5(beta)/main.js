@@ -7,6 +7,16 @@ import {Lose} from "./ui/finish/lose.component.js";
 
 subscribe(renderApp)
 
+/*
+ * Чехия
+ * Хорватия
+ * Греция
+ * Германия
+ * Украина
+ * Белоруссия
+ * Турция
+ * */
+
 function renderApp() {
     const appEl = document.getElementById('app')
     appEl.innerHTML = ''
