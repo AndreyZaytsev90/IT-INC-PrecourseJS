@@ -71,7 +71,7 @@ export function catchOffer(){
         setTimeout(() => {
             data.gameStatus = GAME_STATUSES.WIN
             subscriber() // Полагаю, что вам нужно оповестить подписчика об изменении статуса игры
-        }, 500) 
+        }, 200)
     } else {
         jumpOfferToRandomPosition()
         runJumpInterval()
@@ -88,7 +88,7 @@ function missOffer(){
         setTimeout(() => {
             data.gameStatus = GAME_STATUSES.LOSE
             subscriber() // Полагаю, что вам нужно оповестить подписчика об изменении статуса игры
-        }, 500)
+        }, 200)
     } else {
         jumpOfferToRandomPosition()
         runJumpInterval()

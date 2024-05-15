@@ -22,7 +22,7 @@ export function Cell(x, y) {
         offerImage.addEventListener('click', () => catchOffer())
         cellEl.append(offerImage)
     }
-    console.log(data.coords.previous.x , data.coords.previous.y)
+
     if (data.status === OFFER_STATUSES.caught && x === data.coords.previous.x && y === data.coords.previous.y) {
         cellEl.innerHTML = ''
         cellEl.append(offerCaughtImage)
