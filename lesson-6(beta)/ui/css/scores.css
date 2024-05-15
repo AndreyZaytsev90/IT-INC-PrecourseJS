@@ -1,0 +1,52 @@
+.scores-container {
+    position: absolute;
+    width: 375px;
+    height: 48px;
+    top: 100px;
+    left: 50%;
+    transform: translateX(-50%);
+    display: flex;
+    justify-content: space-around;
+    align-items: center;
+    padding: 12px 36px;
+    border-radius: 30px;
+    box-shadow: 0 4px 8px 0 rgba(88, 150, 238, 0.3);
+    background: rgb(82, 140, 222);
+    color: rgb(255, 255, 255);
+    font-family: Roboto, serif;
+    font-size: 18px;
+    font-weight: 400;
+    line-height: 24px;
+    text-align: left;
+}
+
+
+.scores-miss-container {
+    margin-left: 80px;
+}
+
+.currentCatchCountScores {
+    position: absolute;
+    display: flex;
+    justify-content: space-between;
+    width: 120px;
+    height: 407px;
+    left: 10%;
+    top: 25px;
+    font-size: 24px;
+    font-weight: 400;
+    line-height: 24px;
+}
+
+.currentMissCountScores {
+    position: absolute;
+    display: flex;
+    justify-content: space-between;
+    width: 120px;
+    height: 407px;
+    left: 63%;
+    top: 25px;
+    font-size: 24px;
+    font-weight: 400;
+    line-height: 24px;
+}
