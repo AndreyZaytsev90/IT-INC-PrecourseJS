@@ -10,7 +10,7 @@ rootElement.innerHTML = ''
     rootElement.append(` Player${numberPlayer}: ${score.toString()}`)
 }*/
 
-const appElement = AppComponent()
+const appComponent = AppComponent()
 
-rootElement.append(appElement)
+rootElement.append(appComponent.element)
 
