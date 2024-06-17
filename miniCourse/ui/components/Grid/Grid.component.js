@@ -2,7 +2,7 @@ import {getGridSize} from "../../../core/state-manager.js";
 
 export function GridComponent() {
     const element = document.createElement('table')
-
+    element.classList.add('grid')
     render(element)
     
     //совращаем объект со свойством element и значением element
@@ -15,6 +15,7 @@ async function render(element) {
 
     for (let y = 0; y < gridSize.rowsCount ; y++) {
         const rowElement = document.createElement('tr')
+        
 
         for (let x = 0; x < gridSize.columnCount; x++) {
             const cellElement = document.createElement('td')
