@@ -1,16 +1,16 @@
 import {AppComponent} from "./components/App.component.js";
+import {subscribe, unsubscribe} from "../core/state-manager.js";
 
 const rootElement = document.getElementById('root')
 
-rootElement.innerHTML = ''
+function renderApp() {
+    rootElement.innerHTML = ''
+    const appComponent = AppComponent()
+    rootElement.append(appComponent.element)
+}
 
-/*for (let i = 0; i < state.points.players.length; i++) {
-    const numberPlayer = i + 1
-    const score = state.points.players[i]
-    rootElement.append(` Player${numberPlayer}: ${score.toString()}`)
-}*/
+renderApp();
 
-const appComponent = AppComponent()
-
-rootElement.append(appComponent.element)
-
+subscribe(renderApp) // подписываемcя на renderApp - функция наблюдатель
+/*
+unsubscribe(renderApp) // отписываемся от наблюдателя при необходимости*/
