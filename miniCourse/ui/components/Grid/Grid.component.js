@@ -19,8 +19,8 @@ async function render(element) {
 
 
         for (let x = 0; x < gridSize.columnCount; x++) {
-            const cellElement = CellComponent(x, y);
-            rowElement.append(cellElement)
+            const cellComponent = CellComponent(x, y);
+            rowElement.append(cellComponent.element)
         }
         element.append(rowElement)
     }

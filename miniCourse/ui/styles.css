@@ -6,6 +6,6 @@
 .grid td {
     width: 65px;
     height: 65px;
-    border: 2px solid red;
+    border: 1px solid black;
     border-radius: 5px;
 }
