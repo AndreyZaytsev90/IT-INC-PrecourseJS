@@ -61,9 +61,12 @@ function _jumpGoogleToNewPosition() {
         newPosition.x = _generateNewNumber(0, _state.settings.gridSize.columnCount)
         newPosition.y = _generateNewNumber(0, _state.settings.gridSize.rowsCount)
 
-        var isPositionMatchingGoogle = newPosition.x === _state.positions.google.x && newPosition.y === _state.positions.google.y
-        var isPositionMatchingPlayer1 = newPosition.x === _state.positions.players[0].x && newPosition.y === _state.positions.players[0].y
-        var isPositionMatchingPlayer2 = newPosition.x === _state.positions.players[1].x && newPosition.y === _state.positions.players[1].y
+        var isPositionMatchingGoogle =
+            newPosition.x === _state.positions.google.x && newPosition.y === _state.positions.google.y
+        var isPositionMatchingPlayer1 =
+            newPosition.x === _state.positions.players[0].x && newPosition.y === _state.positions.players[0].y
+        var isPositionMatchingPlayer2 =
+            newPosition.x === _state.positions.players[1].x && newPosition.y === _state.positions.players[1].y
 
     } while (isPositionMatchingGoogle || isPositionMatchingPlayer1 || isPositionMatchingPlayer2)
 }
@@ -80,7 +83,7 @@ function _getPlayerIndexByNumber(playerNumber) {
 }
 
 setInterval(() => {
-    _state.positions.google = {x: 2, y: 1}
+    _jumpGoogleToNewPosition()
     _state.points.google++
     /*  _observer() //4) Вызываем */
     _notifyObserver()
