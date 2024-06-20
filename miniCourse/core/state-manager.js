@@ -1,9 +1,18 @@
+import {GAME_STATUSES} from "./constants.js";
+
 const _state = {
+    game_state: GAME_STATUSES.SETTINGS,
     settings: {
         gridSize: {
-            rowsCount: 4,
-            columnCount: 4
-        }
+            rowsCount: 6,
+            columnCount: 6
+        },
+        /**
+         * in milliseconds
+         */
+        googleJumpInterval: 1000,
+        pointsToLose: 3,
+        pointsToWin: 3,
     },
     positions: {
         google: {
@@ -19,8 +28,8 @@ const _state = {
         }]
     },
     points: {
-        google: 12,
-        players: [10, 11]
+        google: 0,
+        players: [0, 0]
     }
 }
 
@@ -50,16 +59,25 @@ function _notifyObserver() {
     })
 }
 
-function _generateNewNumber(min, max) {
-    return Math.random() * (max - min) + min
+/**
+ * Returns a random integer between min (inclusive) and max (inclusive).
+ * The value is no lower than min (or the next integer greater than min
+ * if min isn't an integer) and no greater than max (or the next integer
+ * lower than max if max isn't an integer).
+ * Using Math.round() will give you a non-uniform distribution!
+ */
+function _getRandomIntNumber(min, max) {
+    min = Math.ceil(min);
+    max = Math.floor(max);
+    return Math.floor(Math.random() * (max - min + 1)) + min;
 }
 
 function _jumpGoogleToNewPosition() {
     const newPosition = {..._state.positions.google}
 
     do {
-        newPosition.x = _generateNewNumber(0, _state.settings.gridSize.columnCount)
-        newPosition.y = _generateNewNumber(0, _state.settings.gridSize.rowsCount)
+        newPosition.x = _getRandomIntNumber(0, _state.settings.gridSize.columnCount - 1)
+        newPosition.y = _getRandomIntNumber(0, _state.settings.gridSize.rowsCount - 1)
 
         var isPositionMatchingGoogle =
             newPosition.x === _state.positions.google.x && newPosition.y === _state.positions.google.y
@@ -68,7 +86,8 @@ function _jumpGoogleToNewPosition() {
         var isPositionMatchingPlayer2 =
             newPosition.x === _state.positions.players[1].x && newPosition.y === _state.positions.players[1].y
 
-    } while (isPositionMatchingGoogle || isPositionMatchingPlayer1 || isPositionMatchingPlayer2)
+    } while (isPositionMatchingGoogle || isPositionMatchingPlayer1 || isPositionMatchingPlayer2) //если ключи true, то значит значения координат совпали и нужно делать регенерацию
+    _state.positions.google = newPosition
 }
 
 
@@ -82,15 +101,41 @@ function _getPlayerIndexByNumber(playerNumber) {
     return playerIndex;
 }
 
-setInterval(() => {
-    _jumpGoogleToNewPosition()
-    _state.points.google++
-    /*  _observer() //4) Вызываем */
-    _notifyObserver()
-}, 1000)
+let jumpGoogleInterval
 
+export async function startGame() {
+    
+    _state.positions.players[0] = {x:0,y:0}
+    _state.positions.players[1] = {x:_state.settings.gridSize.columnCount-1,y:_state.settings.gridSize.rowsCount-1}
+    _jumpGoogleToNewPosition()
+    _state.points.google = 0
+    _state.points.players = [0,0]
+    
+    jumpGoogleInterval = setInterval(() => {
+        _jumpGoogleToNewPosition()
+        _state.points.google++
+        if (_state.points.google === _state.settings.pointsToWin) {
+            clearInterval(jumpGoogleInterval)
+            _state.game_state = GAME_STATUSES.LOSE
+        } else {
+            _state.game_state = GAME_STATUSES.IN_PROGRESS
+        }
+        /*  _observer() //4) Вызываем */
+        _notifyObserver()
+    }, _state.settings.googleJumpInterval)
+    _state.game_state = GAME_STATUSES.IN_PROGRESS
+    _notifyObserver()
+}
+
+export async function playAgain(){
+    _state.game_state = GAME_STATUSES.SETTINGS
+    _notifyObserver()
+}
 
 //Interface
+export async function getGameStatus() {
+    return _state.game_state
+}
 /**
  * @returns {number}- number of points
  */

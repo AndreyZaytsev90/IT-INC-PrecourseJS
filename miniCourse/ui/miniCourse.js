@@ -6,7 +6,7 @@ const rootElement = document.getElementById('root')
 function renderApp() {
     rootElement.innerHTML = ''
     const appComponent = AppComponent()
-    rootElement.append(appComponent.element)
+    return rootElement.append(appComponent.element)
 }
 
 renderApp();
