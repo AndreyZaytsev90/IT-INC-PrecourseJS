@@ -1,9 +1,13 @@
-import {getGooglePoints, getPlayersPoints} from "../../../core/state-manager.js";
+import {getGooglePoints, getPlayersPoints, subscribe} from "../../../core/state-manager.js";
 
 
 export function ResultPanelComponent() {
     const element = document.createElement('div')
     element.classList.add('result-panel')
+    
+    subscribe(()=> {
+        render(element)  
+    })
     
     render(element)
 
@@ -12,6 +16,7 @@ export function ResultPanelComponent() {
 }
 
 async function render(element) {
+    element.innerHTML = ''
     //Получаем поинты для игроков, путем вызова функции геттера
     const player1 = await getPlayersPoints(1)
     const player2 = await getPlayersPoints(2)

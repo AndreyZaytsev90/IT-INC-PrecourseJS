@@ -3,14 +3,13 @@ import {subscribe, unsubscribe} from "../core/state-manager.js";
 
 const rootElement = document.getElementById('root')
 
-function renderApp() {
     rootElement.innerHTML = ''
+
     const appComponent = AppComponent()
-    return rootElement.append(appComponent.element)
-}
 
-renderApp();
+    rootElement.append(appComponent.element)
 
-subscribe(renderApp) // подписываемcя на renderApp - функция наблюдатель
+
+/*subscribe(renderApp) // подписываемcя на renderApp - функция наблюдатель*/
 /*
 unsubscribe(renderApp) // отписываемся от наблюдателя при необходимости*/
