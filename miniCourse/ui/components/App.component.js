@@ -7,7 +7,7 @@ import {GAME_STATUSES} from "../../core/constants.js";
 import {StartGameComponent} from "./StartGame/StartGame.component.js";
 
 export function AppComponent() {
-    const localState = {prevGameStatus: null}
+    const localState = {prevGameStatus: null, cleanUpFunctions: []}
     console.log("APP CREATING")
     const element = document.createElement('div')
     
@@ -26,8 +26,13 @@ async function render(element, localState) {
     //Оптимизация перерисовок 
     if (localState.prevGameStatus === gameStatus) return
     localState.prevGameStatus = gameStatus
+    
     console.log("APP RENDERING")
+    localState.cleanUpFunctions.forEach((cf) => cf())
+    localState.cleanUpFunctions = []
+    
     element.innerHTML = ''
+    
     switch (gameStatus) {
         case GAME_STATUSES.SETTINGS: {
             const settingsComponent = SettingsComponent()
@@ -38,7 +43,9 @@ async function render(element, localState) {
         case GAME_STATUSES.IN_PROGRESS:
             const settingsComponent = SettingsComponent()
             const resultPanelComponent = ResultPanelComponent()
+            localState.cleanUpFunctions.push(resultPanelComponent.cleanUp)
             const gridComponent = GridComponent()
+            localState.cleanUpFunctions.push(gridComponent.cleanUp)
             //Программа визуализации данных (программа умирает и перезапускает заново во всякий раз, как меняются данные в стэйте)
             element.append(settingsComponent.element, resultPanelComponent.element, gridComponent.element)
             break;

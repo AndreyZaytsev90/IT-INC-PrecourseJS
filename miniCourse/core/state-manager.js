@@ -95,15 +95,19 @@ function _jumpGoogleToNewPosition() {
 // Далее получить их в другом месте, путем вызова этой функции)
 function _getPlayerIndexByNumber(playerNumber) {
     const playerIndex = playerNumber - 1
+    
     if (playerIndex < 0 || playerIndex > _state.points.players.length - 1) {
         throw new Error("Incorrect player number")
     }
+    
     return playerIndex;
 }
 
 let jumpGoogleInterval
 
 export async function startGame() {
+    //Проверка состояния программы. Возможно ли запустить игру?
+    if (_state.game_state !== GAME_STATUSES.SETTINGS) throw new Error(`Incorrect transition from "${_state.game_state}" to "${GAME_STATUSES.IN_PROGRESS}"`)
     
     _state.positions.players[0] = {x:0,y:0}
     _state.positions.players[1] = {x:_state.settings.gridSize.columnCount-1,y:_state.settings.gridSize.rowsCount-1}

@@ -13,6 +13,6 @@ async function render(element) {
     button.append('Start game!')
     button.addEventListener('click', ()=> {
         startGame()
-    }) 
+    })
     element.append(button)
 }

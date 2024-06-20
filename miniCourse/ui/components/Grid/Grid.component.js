@@ -1,21 +1,25 @@
-import {getGridSize, subscribe} from "../../../core/state-manager.js";
+import {getGridSize, subscribe, unsubscribe} from "../../../core/state-manager.js";
 import {CellComponent} from "./Cell/Cell.component.js";
 
 export function GridComponent() {
+    console.log("GRID COMPONENT CREATING")
     const element = document.createElement('table')
     element.classList.add('grid')
-
-    subscribe(() => {
+    
+    const observer = () => {
         render(element)
-    })
+    }
+
+    subscribe(observer)
 
     render(element)
 
-    //совращаем объект со свойством element и значением element
-    return {element}
+    //возвращаем объект
+    return {element, cleanUp: () => {unsubscribe(observer)}}
 }
 
 async function render(element) {
+    console.log("GRID COMPONENT RENDERING")
     element.innerHTML = ''
     const gridSize = await getGridSize()
 
