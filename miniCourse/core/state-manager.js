@@ -1,4 +1,4 @@
-import {EVENTS, GAME_STATUSES} from "./constants.js";
+import {EVENTS, GAME_STATUSES, MOVING_DIRECTIONS} from "./constants.js";
 
 const _state = {
     game_state: GAME_STATUSES.SETTINGS,
@@ -88,6 +88,14 @@ function _jumpGoogleToNewPosition() {
     _state.positions.google = newPosition
 }
 
+function _checkValidRange(position) {
+    if (position.x < 0 || position.x >= _state.settings.gridSize.columnCount) return false
+    if (position.y < 0 || position.y >= _state.settings.gridSize.rowsCount) return false
+}
+function _checkPlayer1Position(newPosition) {
+    return newPosition.x === _state.positions.players[0].x && newPosition.y === _state.positions.players[0].y
+}
+
 
 // ***INTERFACE / ADAPTER***
 export async function startGame() {
@@ -126,9 +134,51 @@ export async function startGame() {
     _state.game_state = GAME_STATUSES.IN_PROGRESS
     _notifyObserver(EVENTS.STATUS_CHANGED)
 }
+
 export async function playAgain() {
     _state.game_state = GAME_STATUSES.SETTINGS
     _notifyObserver(EVENTS.STATUS_CHANGED)
+}
+
+export async function movePlayer(playerNumber, direction) {
+    if (_state.game_state === GAME_STATUSES.IN_PROGRESS) {
+        console.warn('You can move player when game is in progress')
+        return
+    }
+    const playerIndex = _getPlayerIndexByNumber(playerNumber);
+    const newPosition = {..._state.positions.players[playerIndex]}
+
+    switch (direction) {
+        case MOVING_DIRECTIONS.UP:
+            newPosition.y-- ;
+            break
+        case MOVING_DIRECTIONS.DOWN:
+            newPosition.y++ ;
+            break
+        case MOVING_DIRECTIONS.LEFT:
+            newPosition.x-- ;
+            break
+        case MOVING_DIRECTIONS.RIGHT:
+            newPosition.x++ ;
+            break
+    }
+    
+    const isValidRange = _checkValidRange(newPosition)
+    if (!isValidRange) return
+    
+    const isPlayer1PositionTheSame = _checkPlayer1Position(newPosition)
+    if (isPlayer1PositionTheSame) return
+
+    const isPlayer2PositionTheSame = _checkPlayer2Position(newPosition)
+    if (isPlayer2PositionTheSame) return
+    
+    const isGooglePositionTheSame = _checkGooglePosition(newPosition)
+    
+    if (isGooglePositionTheSame) {
+        _catchGoogle()
+    }
+    
+    _state.positions.players[playerIndex] = newPosition
 }
 
 
@@ -141,6 +191,7 @@ function _getRandomIntNumber(min, max) {
     max = Math.floor(max);
     return Math.floor(Math.random() * (max - min + 1)) + min;
 }
+
 function _getPlayerIndexByNumber(playerNumber) {
     const playerIndex = playerNumber - 1
 
@@ -150,6 +201,7 @@ function _getPlayerIndexByNumber(playerNumber) {
 
     return playerIndex;
 }
+
 export async function getGameStatus() {
     return _state.game_state
 }
@@ -181,8 +233,4 @@ export async function getGooglePosition() {
 export async function getPlayerPosition(playerNumber) {
     const playerIndex = _getPlayerIndexByNumber(playerNumber);
     return {..._state.positions.players[playerIndex]}
-}
-
-export async function movePlayer(playerNumber, direction) {
-    const playerIndex = _getPlayerIndexByNumber(playerNumber);
 }
