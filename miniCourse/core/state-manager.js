@@ -1,4 +1,4 @@
-import {GAME_STATUSES} from "./constants.js";
+import {EVENTS, GAME_STATUSES} from "./constants.js";
 
 const _state = {
     game_state: GAME_STATUSES.SETTINGS,
@@ -10,9 +10,9 @@ const _state = {
         /**
          * in milliseconds
          */
-        googleJumpInterval: 1000,
-        pointsToLose: 3,
-        pointsToWin: 3,
+        googleJumpInterval: 3000,
+        pointsToLose: 10,
+        pointsToWin: 10,
     },
     positions: {
         google: {
@@ -49,10 +49,14 @@ export function unsubscribe(observer) { // функция удаления на�
     _observers = _observers.filter((obs) => obs !== observer)
 }
 
-function _notifyObserver() {
+function _notifyObserver(name, payload = {}) {
+    const event = {
+        name,
+        payload
+    }
     _observers.forEach((obs) => {
         try {
-            obs()
+            obs(event)
         } catch (error) {
             console.error(error)
         }
@@ -66,12 +70,6 @@ function _notifyObserver() {
  * lower than max if max isn't an integer).
  * Using Math.round() will give you a non-uniform distribution!
  */
-function _getRandomIntNumber(min, max) {
-    min = Math.ceil(min);
-    max = Math.floor(max);
-    return Math.floor(Math.random() * (max - min + 1)) + min;
-}
-
 function _jumpGoogleToNewPosition() {
     const newPosition = {..._state.positions.google}
 
@@ -91,55 +89,71 @@ function _jumpGoogleToNewPosition() {
 }
 
 
-// Архитектурное решение - геттер (функция, которая позволяет достать из стейта данные.
-// Далее получить их в другом месте, путем вызова этой функции)
-function _getPlayerIndexByNumber(playerNumber) {
-    const playerIndex = playerNumber - 1
-    
-    if (playerIndex < 0 || playerIndex > _state.points.players.length - 1) {
-        throw new Error("Incorrect player number")
-    }
-    
-    return playerIndex;
-}
-
-let jumpGoogleInterval
-
+// ***INTERFACE / ADAPTER***
 export async function startGame() {
     //Проверка состояния программы. Возможно ли запустить игру?
     if (_state.game_state !== GAME_STATUSES.SETTINGS) throw new Error(`Incorrect transition from "${_state.game_state}" to "${GAME_STATUSES.IN_PROGRESS}"`)
-    
-    _state.positions.players[0] = {x:0,y:0}
-    _state.positions.players[1] = {x:_state.settings.gridSize.columnCount-1,y:_state.settings.gridSize.rowsCount-1}
+
+    _state.positions.players[0] = {x: 0, y: 0}
+    _state.positions.players[1] = {
+        x: _state.settings.gridSize.columnCount - 1,
+        y: _state.settings.gridSize.rowsCount - 1
+    }
     _jumpGoogleToNewPosition()
     _state.points.google = 0
-    _state.points.players = [0,0]
-    
-    jumpGoogleInterval = setInterval(() => {
+    _state.points.players = [0, 0]
+
+    let jumpGoogleInterval = setInterval(() => {
+        const oldPosition = {..._state.positions.google}
         _jumpGoogleToNewPosition()
+        _notifyObserver(EVENTS.GOOGLE_JUMPED, {
+            oldPosition,
+            newPosition: {..._state.positions.google}
+        })
         _state.points.google++
+        _notifyObserver(EVENTS.SCORES_CHANGED)
         if (_state.points.google === _state.settings.pointsToWin) {
             clearInterval(jumpGoogleInterval)
             _state.game_state = GAME_STATUSES.LOSE
-        } else {
-            _state.game_state = GAME_STATUSES.IN_PROGRESS
+            _notifyObserver(EVENTS.STATUS_CHANGED)
         }
+        /*  else {
+              _state.game_state = GAME_STATUSES.IN_PROGRESS
+          }*/
         /*  _observer() //4) Вызываем */
-        _notifyObserver()
+
     }, _state.settings.googleJumpInterval)
     _state.game_state = GAME_STATUSES.IN_PROGRESS
-    _notifyObserver()
+    _notifyObserver(EVENTS.STATUS_CHANGED)
 }
-
-export async function playAgain(){
+export async function playAgain() {
     _state.game_state = GAME_STATUSES.SETTINGS
-    _notifyObserver()
+    _notifyObserver(EVENTS.STATUS_CHANGED)
 }
 
-//Interface
+
+// Архитектурное решение - геттер (функция, которая позволяет достать из стейта данные.
+// Далее получить их в другом месте, путем вызова этой функции)
+
+// ***GETTERS / SELECTORS***
+function _getRandomIntNumber(min, max) {
+    min = Math.ceil(min);
+    max = Math.floor(max);
+    return Math.floor(Math.random() * (max - min + 1)) + min;
+}
+function _getPlayerIndexByNumber(playerNumber) {
+    const playerIndex = playerNumber - 1
+
+    if (playerIndex < 0 || playerIndex > _state.points.players.length - 1) {
+        throw new Error("Incorrect player number")
+    }
+
+    return playerIndex;
+}
 export async function getGameStatus() {
     return _state.game_state
 }
+
 /**
  * @returns {number}- number of points
  */
@@ -167,4 +181,8 @@ export async function getGooglePosition() {
 export async function getPlayerPosition(playerNumber) {
     const playerIndex = _getPlayerIndexByNumber(playerNumber);
     return {..._state.positions.players[playerIndex]}
+}
+
+export async function movePlayer(playerNumber, direction) {
+    const playerIndex = _getPlayerIndexByNumber(playerNumber);
 }

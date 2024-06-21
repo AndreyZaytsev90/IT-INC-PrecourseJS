@@ -1,11 +1,13 @@
 import {getGooglePoints, getPlayersPoints, subscribe, unsubscribe} from "../../../core/state-manager.js";
+import {EVENTS} from "../../../core/constants.js";
 
 
 export function ResultPanelComponent() {
     const element = document.createElement('div')
     element.classList.add('result-panel')
 
-    const observer = () => {
+    const observer = (e) => {
+        if (e.name === EVENTS.SCORES_CHANGED)
         render(element)
     }
 
@@ -25,7 +27,5 @@ async function render(element) {
     const google =  await getGooglePoints()
 
     //Программа визуализации данных (программа умирает и перезапускает заново во всякий раз, как меняются данные в стэйте)
-    element.append(` Player1: ${player1}`)
-    element.append(` Player2: ${player2}`)
-    element.append(` Google: ${google}`)
+    element.append(` Player1: ${player1}, Player2: ${player2}, Google: ${google}`)
 }
