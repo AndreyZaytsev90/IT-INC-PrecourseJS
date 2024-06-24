@@ -12,7 +12,7 @@ const _state = {
          */
         googleJumpInterval: 3000,
         pointsToLose: 10,
-        pointsToWin: 10,
+        pointsToWin: 5,
     },
     positions: {
         google: {
@@ -77,27 +77,62 @@ function _jumpGoogleToNewPosition() {
         newPosition.x = _getRandomIntNumber(0, _state.settings.gridSize.columnCount - 1)
         newPosition.y = _getRandomIntNumber(0, _state.settings.gridSize.rowsCount - 1)
 
-        var isPositionMatchingGoogle =
-            newPosition.x === _state.positions.google.x && newPosition.y === _state.positions.google.y
-        var isPositionMatchingPlayer1 =
-            newPosition.x === _state.positions.players[0].x && newPosition.y === _state.positions.players[0].y
-        var isPositionMatchingPlayer2 =
-            newPosition.x === _state.positions.players[1].x && newPosition.y === _state.positions.players[1].y
-
-    } while (isPositionMatchingGoogle || isPositionMatchingPlayer1 || isPositionMatchingPlayer2) //если ключи true, то значит значения координат совпали и нужно делать регенерацию
+        /*     var isPositionMatchingGoogle =
+                 newPosition.x === _state.positions.google.x && newPosition.y === _state.positions.google.y
+             var isPositionMatchingPlayer1 =
+                 newPosition.x === _state.positions.players[0].x && newPosition.y === _state.positions.players[0].y
+             var isPositionMatchingPlayer2 =
+                 newPosition.x === _state.positions.players[1].x && newPosition.y === _state.positions.players[1].y*/
+        // Рефакторинг
+    } while (
+        _doesPositionMatchWithPlayer1Position(newPosition)
+        || _doesPositionMatchWithPlayer2Position(newPosition)
+        || _doesPositionMatchWithGooglePosition(newPosition)) //если ключи (функции) true, то значит значения координат совпали и нужно делать регенерацию
     _state.positions.google = newPosition
 }
 
-function _checkValidRange(position) {
+function _isPositionValidRange(position) {
     if (position.x < 0 || position.x >= _state.settings.gridSize.columnCount) return false
     if (position.y < 0 || position.y >= _state.settings.gridSize.rowsCount) return false
+
+    return true
 }
-function _checkPlayer1Position(newPosition) {
+
+function _doesPositionMatchWithPlayer1Position(newPosition) {
     return newPosition.x === _state.positions.players[0].x && newPosition.y === _state.positions.players[0].y
 }
 
+function _doesPositionMatchWithPlayer2Position(newPosition) {
+    return newPosition.x === _state.positions.players[1].x && newPosition.y === _state.positions.players[1].y
+}
+
+function _doesPositionMatchWithGooglePosition(newPosition) {
+    return newPosition.x === _state.positions.google.x && newPosition.y === _state.positions.google.y
+}
+
+function _catchGoogle(playerNumber) {
+    const playerIndex = _getPlayerIndexByNumber(playerNumber);
+
+    _state.points.players[playerIndex]++
+    _notifyObserver(EVENTS.SCORES_CHANGED)
+
+    if (_state.points.players[playerIndex] === _state.settings.pointsToWin) {
+        _state.game_state = GAME_STATUSES.WIN
+        _notifyObserver(EVENTS.STATUS_CHANGED)
+        clearInterval(jumpGoogleInterval)
+    } else {
+        const oldPosition = {..._state.positions.google}
+        _jumpGoogleToNewPosition()
+        _notifyObserver(EVENTS.GOOGLE_JUMPED, {
+            oldPosition,
+            newPosition: _state.positions.google
+        })
+    }
+}
 
 // ***INTERFACE / ADAPTER***
+let jumpGoogleInterval
+
 export async function startGame() {
     //Проверка состояния программы. Возможно ли запустить игру?
     if (_state.game_state !== GAME_STATUSES.SETTINGS) throw new Error(`Incorrect transition from "${_state.game_state}" to "${GAME_STATUSES.IN_PROGRESS}"`)
@@ -111,7 +146,7 @@ export async function startGame() {
     _state.points.google = 0
     _state.points.players = [0, 0]
 
-    let jumpGoogleInterval = setInterval(() => {
+    jumpGoogleInterval = setInterval(() => {
         const oldPosition = {..._state.positions.google}
         _jumpGoogleToNewPosition()
         _notifyObserver(EVENTS.GOOGLE_JUMPED, {
@@ -120,7 +155,8 @@ export async function startGame() {
         })
         _state.points.google++
         _notifyObserver(EVENTS.SCORES_CHANGED)
-        if (_state.points.google === _state.settings.pointsToWin) {
+
+        if (_state.points.google === _state.settings.pointsToLose) {
             clearInterval(jumpGoogleInterval)
             _state.game_state = GAME_STATUSES.LOSE
             _notifyObserver(EVENTS.STATUS_CHANGED)
@@ -131,6 +167,7 @@ export async function startGame() {
         /*  _observer() //4) Вызываем */
 
     }, _state.settings.googleJumpInterval)
+
     _state.game_state = GAME_STATUSES.IN_PROGRESS
     _notifyObserver(EVENTS.STATUS_CHANGED)
 }
@@ -141,44 +178,50 @@ export async function playAgain() {
 }
 
 export async function movePlayer(playerNumber, direction) {
-    if (_state.game_state === GAME_STATUSES.IN_PROGRESS) {
+    if (_state.game_state !== GAME_STATUSES.IN_PROGRESS) {
         console.warn('You can move player when game is in progress')
         return
     }
     const playerIndex = _getPlayerIndexByNumber(playerNumber);
+    const oldPosition = {..._state.positions.players[playerIndex]}
     const newPosition = {..._state.positions.players[playerIndex]}
 
     switch (direction) {
         case MOVING_DIRECTIONS.UP:
-            newPosition.y-- ;
+            newPosition.y--;
             break
         case MOVING_DIRECTIONS.DOWN:
-            newPosition.y++ ;
+            newPosition.y++;
             break
         case MOVING_DIRECTIONS.LEFT:
-            newPosition.x-- ;
+            newPosition.x--;
             break
         case MOVING_DIRECTIONS.RIGHT:
-            newPosition.x++ ;
+            newPosition.x++;
             break
     }
-    
-    const isValidRange = _checkValidRange(newPosition)
+
+    const isValidRange = _isPositionValidRange(newPosition)
     if (!isValidRange) return
-    
-    const isPlayer1PositionTheSame = _checkPlayer1Position(newPosition)
+
+    const isPlayer1PositionTheSame = _doesPositionMatchWithPlayer1Position(newPosition)
     if (isPlayer1PositionTheSame) return
 
-    const isPlayer2PositionTheSame = _checkPlayer2Position(newPosition)
+    const isPlayer2PositionTheSame = _doesPositionMatchWithPlayer2Position(newPosition)
     if (isPlayer2PositionTheSame) return
-    
-    const isGooglePositionTheSame = _checkGooglePosition(newPosition)
-    
+
+    const isGooglePositionTheSame = _doesPositionMatchWithGooglePosition(newPosition)
+
     if (isGooglePositionTheSame) {
-        _catchGoogle()
+        _catchGoogle(playerNumber)
     }
-    
+
     _state.positions.players[playerIndex] = newPosition
+
+    _notifyObserver(EVENTS[`PLAYER${playerNumber}_MOVED`], {
+        oldPosition: oldPosition,
+        newPosition: newPosition
+    })
 }
 
 

@@ -5,6 +5,7 @@ import {LoseComponent} from "./Lose/Lose.component.js";
 import {getGameStatus, subscribe} from "../../core/state-manager.js";
 import {GAME_STATUSES} from "../../core/constants.js";
 import {StartGameComponent} from "./StartGame/StartGame.component.js";
+import {WinComponent} from "./Win/Win.component.js";
 
 export function AppComponent() {
     const localState = {prevGameStatus: null, cleanUpFunctions: []}
@@ -50,6 +51,8 @@ async function render(element, localState) {
             element.append(settingsComponent.element, resultPanelComponent.element, gridComponent.element)
             break;
         case GAME_STATUSES.WIN:
+            const winComponent = WinComponent()
+            element.append(winComponent.element)
             break;
         case GAME_STATUSES.LOSE:
             const loseComponent = LoseComponent()

@@ -1,8 +1,31 @@
-import {getGridSize, subscribe, unsubscribe} from "../../../core/state-manager.js";
+import {getGridSize, movePlayer} from "../../../core/state-manager.js";
 import {CellComponent} from "./Cell/Cell.component.js";
+import {MOVING_DIRECTIONS} from "../../../core/constants.js";
 
 export function GridComponent() {
     const localState = {cleanUpFunctions: []}
+
+    //Перемещение игроков
+
+    const keyUpObserver = (event) => {
+        console.log(event.code)
+        switch (event.code) {
+            case 'ArrowUp': movePlayer(1, MOVING_DIRECTIONS.UP); break
+            case 'ArrowLeft': movePlayer(1, MOVING_DIRECTIONS.LEFT); break
+            case 'ArrowDown': movePlayer(1, MOVING_DIRECTIONS.DOWN); break
+            case 'ArrowRight': movePlayer(1, MOVING_DIRECTIONS.RIGHT); break
+            
+            case 'KeyW': movePlayer(2, MOVING_DIRECTIONS.UP); break
+            case 'KeyA': movePlayer(2, MOVING_DIRECTIONS.LEFT); break
+            case 'KeyS': movePlayer(2, MOVING_DIRECTIONS.DOWN); break
+            case 'KeyD': movePlayer(2, MOVING_DIRECTIONS.RIGHT); break
+        }
+    }
+
+    document.addEventListener('keyup', keyUpObserver)
+
+
+    ////////////////////
     const element = document.createElement('table')
     element.classList.add('grid')
 
@@ -16,9 +39,10 @@ export function GridComponent() {
 
     //возвращаем объект
     return {
-        element, 
+        element,
         cleanUp: () => {
             localState.cleanUpFunctions.forEach(cf => cf())
+            document.removeEventListener('keyup', keyUpObserver)
         }
     }
 }
