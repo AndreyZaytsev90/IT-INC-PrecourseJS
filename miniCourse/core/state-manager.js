@@ -115,6 +115,7 @@ function _catchGoogle(playerNumber) {
 
     _state.points.players[playerIndex]++
     _notifyObserver(EVENTS.SCORES_CHANGED)
+    _notifyObserver(EVENTS.GOOGLE_CAUGHT)
 
     if (_state.points.players[playerIndex] === _state.settings.pointsToWin) {
         _state.game_state = GAME_STATUSES.WIN
@@ -153,6 +154,7 @@ export async function startGame() {
             oldPosition,
             newPosition: {..._state.positions.google}
         })
+        _notifyObserver(EVENTS.GOOGLE_RUN_AWAY)
         _state.points.google++
         _notifyObserver(EVENTS.SCORES_CHANGED)
 
