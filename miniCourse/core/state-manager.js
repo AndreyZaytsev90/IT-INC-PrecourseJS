@@ -1,3 +1,9 @@
+const evtSource = new EventSource('http://localhost:3000/events');
+evtSource.addEventListener('message', (eventSourceEvent)=> {
+    const event = JSON.parse(eventSourceEvent.data)
+    _notifyObserver(event.name, event.payload)
+})
+
 let _observers = []
 
 export function subscribe(observer) {

@@ -7,7 +7,7 @@ import {
     getGooglePosition,
     playAgain,
     getPlayerPosition,
-    getGridSize, getPlayersPoints, getGooglePoints, movePlayer
+    getGridSize, getPlayersPoints, getGooglePoints, movePlayer, subscribe, unsubscribe
 } from "../core/state-manager-server.js";
 
 // Создание экземпляра приложения
@@ -16,6 +16,25 @@ app.use(cors())
 
 // Порт, на котором будет запущен сервер
 const PORT = 3000;
+
+// Маршрут для SSE
+app.get('/events', (req, res) => {
+    res.setHeader('Content-Type', 'text/event-stream'); // Установка необходимого заголовка для SSE
+    res.setHeader('Cache-Control', 'no-cache'); // Запрет кеширования ответа
+    res.setHeader('Connection', 'keep-alive'); // Держи соединение открытым
+
+    const observer = (event)=> {
+        res.write(`data: ${JSON.stringify(event)}\n\n`);
+    }
+    subscribe(observer)
+
+
+    // Очистка и закрытие соединения при отключении клиента
+    req.on('close', () => {
+        unsubscribe(observer)
+        res.end();
+    });
+});
 
 startGame()
 
